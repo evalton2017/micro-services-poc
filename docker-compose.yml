@@ -1,0 +1,75 @@
+version: "3.7"
+services:
+  postgres_db_auth:
+    image: postgres:12
+    container_name: "postgres_auth"
+    environment:
+        - POSTGRES_DB=auth
+        - POSTGRES_USER=auth
+        - POSTGRES_PASSWORD=auth1234
+    volumes:
+      - /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+      
+  postgres_db_produto:
+    image: postgres:12
+    container_name: "postgres_produto"
+    environment:
+        - POSTGRES_DB=produto
+        - POSTGRES_USER=admin
+        - POSTGRES_PASSWORD=admin234
+    volumes:
+      - /var/lib/postgresql/data
+    ports:
+      - 5433:5432
+      
+  mongo_db_vendas:
+    image: mongo
+    container_name: "mongo_vendas"
+    restart: always
+    environment:
+      MONGODB_DATABASE : vendas
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin234
+    image: mongo
+    volumes:
+      - /var/lib/mongodb/data
+    ports:
+      - 27017:27017   
+      - 28017:28017
+      
+  rabbitmq_vendas:
+    image: rabbitmq:3-management-alpine
+    container_name: 'vendas_rabbitmq'
+    ports:
+        - 5672:5672
+        - 25676:25676
+        - 15672:15672
+    volumes:
+        - /var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+        
+  auth-api:
+    build: './auth-api'
+    container_name: 'auth-api'
+    environment:
+        - PORT=3030
+    ports:
+        - 3030:3030
+        
+  produto:
+    build: './produto'
+    container_name: 'produto'
+    environment:
+        - PORT=9090
+    ports:
+        - 9090:9090  
+        
+  vendas:
+    build: './vendas'
+    container_name: 'vendas'
+    environment:
+        - PORT=4040
+    ports:
+        - 4040:4040          
+     
