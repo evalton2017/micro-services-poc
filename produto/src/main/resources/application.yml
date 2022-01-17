@@ -1,18 +1,56 @@
 server:
-  port: ${PORT :9090}
+  port: ${PORT :9091}
 
 spring:
-  jpa:
-    database: POSTGRESQL
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+
+  main:
+    allow-bean-definition-overriding: true
+
+  application:
+    nem: produto
+
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5433/produto
     username: admin
     password: admin234
     driverClassName: org.postgresql.Driver
+    initialization-node: always
+    initialize: true
     hikari:
       connectionTimeout : 20000
       maximumPoolSize : 5
+
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      format_sql: true
+
+  rabbitmaq:
+    host: ${RABBIT_MQ_HOST:localhost}
+    port: ${RABBIT_MQ_PORT:5672}
+    usarname: ${RABBIT_MQ_USERNAME:guest}
+    password: ${RABBIT_MQ_PASSWORD:guest}
+
+app-config:
+
+    services:
+      vendas: ${http://VENDAS_HOST:localhost}:${VENDAS_PORT:8083}
+
+    secrets:
+      api-secrets: ${API_SECRET:ZHVrZWNvcmFqb3NvY29kaWdvZW1iYXNlNjRlbmNvbmRlcg==}
+
+    rabbit:
+      exchange:
+        produto: produto.topic
+
+      routingKey:
+        produto-estoque: produto-estoque.update.routinKey
+        vendas-confirmada: vendas-confirmada.update.routinKey
+
+      queue:
+        produto-estoque: produto-estoque.update.queue
+        vendas-confirmada: vendas-confirmada.update.queue

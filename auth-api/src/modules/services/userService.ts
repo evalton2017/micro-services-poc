@@ -65,10 +65,10 @@ class UserService {
         try{
             this.validateAccesToken(email, password);
             let userRepo = getRepository(User);
-            const user = await userRepo.findOne({email: email});
+            let user = await userRepo.findOne({email: email});
             let senha = user!.password as string;
             const validahash = await this.validatePassword(password, senha);
-            let accesToken = "";
+            let accesToken;
             if(validahash){
                 accesToken = jwt.sign({user}, secrets.API_SECRET, {expiresIn: "1d"});
             }
