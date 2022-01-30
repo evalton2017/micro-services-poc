@@ -54,3 +54,6 @@ app-config:
       queue:
         produto-estoque: produto-estoque.update.queue
         vendas-confirmada: vendas-confirmada.update.queue
+
+app-firebase:
+  firebase-configuration-file: notification.json

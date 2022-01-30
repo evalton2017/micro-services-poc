@@ -1,6 +1,6 @@
 import "reflect-metadata";
-import {createConnection} from "typeorm";
-import { AppLogger } from "./appLogger";
+import mongoose from "mongoose";
+import { MONGO_DB_URL } from "../modules/config/secrets";
 
 
 //CONFIGURAÇÕES LOCAL
@@ -11,25 +11,8 @@ const HOST_LOCAL='localhost';
 
 class Database{
 
-  createConnection(){
-    createConnection({
-      type: "postgres",
-      host: HOST_LOCAL,
-      port: 5432,
-      username: USERNAME_LOCAL,
-      password: PASSWORD_LOCAL,
-      database: DB_LOCAL,
-      entities: [
-        `${__dirname}/../**/*.model.{ts,js}`
-      ],
-      synchronize: true,
-      logging: false
-    }).then(connection => {
-      AppLogger.info("Criando/atualizando tabelas no banco")
-    }).catch((error) => {
-      AppLogger.error(error);
-    });
-
+  async createConnection(): Promise<void> {
+    await mongoose.connect(MONGO_DB_URL);
   }
 
 }
