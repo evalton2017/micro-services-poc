@@ -14,7 +14,7 @@
     "resolveJsonModule": true,
     "alwaysStrict": true,
     "removeComments": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
@@ -30,7 +30,8 @@
       ]
     },
     "typeRoots": [
-      "node_modules/@types"
+      "./src/@types",
+      "./node_modules/@types"
     ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true

@@ -15,7 +15,8 @@
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "start-dev": "ts-node-dev --inspect --ignore-watch node_modules src/index.ts",
     "logs": "heroku logs --app=vendas-api-dev -t",
-    "test": "jest"
+    "test": "jest",
+    "startcontainer": "set NODE_ENV=container&&nodemon src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -42,11 +43,14 @@
   "dependencies": {
     "@hqoss/http-client": "^0.1.27-0",
     "@overnightjs/core": "^1.7.5",
+    "@types/amqplib": "^0.8.2",
     "@types/bluebird": "^3.5.33",
     "@types/compression": "^1.7.0",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/nodemailer": "^6.4.0",
     "@types/validator": "^13.1.2",
-    "axios": "^0.21.0",
+    "amqplib": "^0.8.0",
+    "axios": "^0.21.4",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "config": "^3.3.3",
@@ -60,10 +64,12 @@
     "googleapis": "^39.2.0",
     "heroku": "^7.47.12",
     "http-status": "^1.5.0",
+    "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",
     "mongoose": "^6.1.7",
     "multer": "^1.4.2",
     "nodemailer": "^6.4.17",
+    "nodemon": "^2.0.15",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",

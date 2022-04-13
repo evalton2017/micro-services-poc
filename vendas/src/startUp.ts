@@ -8,7 +8,10 @@ import compression from 'compression';
 import * as cors from 'cors';
 import AppError from './shared/errors/AppError';
 import Database from './util/db';
-import publicRouter from './routes/public-router';
+import vendasRouter from './routes/vendas-router';
+import checkToken from './modules/config/auth/checkToken';
+import {connectRabbitMq} from "./modules/rabbitmq/rabbitmq";
+import { envioMensagemAtualizastoqueProduto } from './modules/listener/produtos/produtoEstoque';
 
 
 class StartUp {
@@ -19,6 +22,7 @@ class StartUp {
     this.app = express();
     this._db = new Database();
     this._db.createConnection();
+    connectRabbitMq();
     this.configureMiddleware();
     this.routes();
     this.app.use((error: Error, request: Request, response: Response, next: NextFunction)=>{
@@ -37,7 +41,27 @@ class StartUp {
   }
 
   routes() {
-    this.app.use("/api", publicRouter);
+   // this.app.use(checkToken);
+    this.app.use("/api", vendasRouter);
+    this.app.get("/teste", (req, res)=>{
+      try{
+        envioMensagemAtualizastoqueProduto([
+          {
+            produtoId: 1001,
+            quantidade: 2
+          },
+          {
+            produtoId: 1002,
+            quantidade: 3
+          }
+
+        ])
+        return res.status(200).json("Sucessso");
+      }catch(err){
+        console.log(err)
+        return res.status(500).json(err);
+      }
+    });
   }
 
   private configureMiddleware() {

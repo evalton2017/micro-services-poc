@@ -7,7 +7,7 @@ class LoginController {
   async cadastrar(req: Request, res: Response) {
     const service = new UserService();
     const user = req.body;
-    let response = await service.cadastrarUser(user);
+    const response = await service.cadastrarUser(user);
     return res.status(response.status).json(response);
   }
 
@@ -28,9 +28,10 @@ class LoginController {
   async getAccessToken(req: Request, res: Response) {
       const {email, password} = req.body;
       const service = new UserService();
-      let accesToken = await service.getAccessToken(email, password);
+      console.log([email, password])
+      const accesToken = await service.getAccessToken(email, password);
       return res.status(accesToken.status).json(accesToken);
-      
+
   }
 
 

@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import mongoose from "mongoose";
-import { MONGO_DB_URL } from "../modules/config/secrets";
+import { MONGO_DB_URL } from "../modules/constantes/secrets";
 
 
 //CONFIGURAÇÕES LOCAL

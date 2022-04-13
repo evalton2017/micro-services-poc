@@ -61,7 +61,7 @@ class StartUp {
     this.app.use(cors.default(options));
   }
 
- 
+
 
 }
 

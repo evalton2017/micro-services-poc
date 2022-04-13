@@ -25,7 +25,7 @@ public class VendasConfirmacaoEnvio {
         try{
             log.info("Enviando mensagem: {}", new ObjectMapper().writeValueAsString(message));
             rabbitTemplate.convertAndSend(produtoTopico, produtoVendaConfirmadaKey, message);
-            log.info("Message enviada com sucesso");
+            log.info("Mensagem enviada com sucesso");
         }catch (Exception ex){
             log.info("Erro durante envio da mensagem de confirmação", ex.getMessage());
         }
